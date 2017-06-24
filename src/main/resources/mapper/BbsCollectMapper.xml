@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.bbs.dao.BbsCollectMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.bbs.model.BbsCollect" >
+    <id column="UUID" property="uuid" jdbcType="BIGINT" />
+    <result column="TOPIC_UUID" property="topicUuid" jdbcType="BIGINT" />
+    <result column="USER_UUID" property="userUuid" jdbcType="BIGINT" />
+    <result column="IN_TIME" property="inTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UUID, TOPIC_UUID, USER_UUID, IN_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_collect
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bbs_collect
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.bbs.model.BbsCollect" >
+    insert into bbs_collect (UUID, TOPIC_UUID, USER_UUID, 
+      IN_TIME)
+    values (#{uuid,jdbcType=BIGINT}, #{topicUuid,jdbcType=BIGINT}, #{userUuid,jdbcType=BIGINT}, 
+      #{inTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.bbs.model.BbsCollect" >
+    insert into bbs_collect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="topicUuid != null" >
+        TOPIC_UUID,
+      </if>
+      <if test="userUuid != null" >
+        USER_UUID,
+      </if>
+      <if test="inTime != null" >
+        IN_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="topicUuid != null" >
+        #{topicUuid,jdbcType=BIGINT},
+      </if>
+      <if test="userUuid != null" >
+        #{userUuid,jdbcType=BIGINT},
+      </if>
+      <if test="inTime != null" >
+        #{inTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.bbs.model.BbsCollect" >
+    update bbs_collect
+    <set >
+      <if test="topicUuid != null" >
+        TOPIC_UUID = #{topicUuid,jdbcType=BIGINT},
+      </if>
+      <if test="userUuid != null" >
+        USER_UUID = #{userUuid,jdbcType=BIGINT},
+      </if>
+      <if test="inTime != null" >
+        IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.bbs.model.BbsCollect" >
+    update bbs_collect
+    set TOPIC_UUID = #{topicUuid,jdbcType=BIGINT},
+      USER_UUID = #{userUuid,jdbcType=BIGINT},
+      IN_TIME = #{inTime,jdbcType=TIMESTAMP}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByTopicUuidCount" resultType="java.lang.Integer" parameterType="java.lang.Long" >
+    select 
+    count(UUID)
+    from bbs_collect
+    where TOPIC_UUID = #{topicUuid,jdbcType=BIGINT}
+  </select>
+<select id="selectByTopicUuidAndUserUuid" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_collect
+   	where TOPIC_UUID = #{topicUuid,jdbcType=BIGINT} 
+   	and USER_UUID = #{userUuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByTopicUuidAndUserUuid" parameterType="java.lang.Long" >
+    delete from bbs_collect
+    <where>   	
+   		<if test="topicUuid != null" >
+       	 	TOPIC_UUID = #{topicUuid,jdbcType=BIGINT}
+      	</if>
+      	<if test="userUuid != null" >
+       		and USER_UUID = #{userUuid,jdbcType=BIGINT}
+      	</if>
+    </where>
+  </delete>
+</mapper>

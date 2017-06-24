@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.bbs.dao.BbsReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.bbs.model.BbsReply" >
+    <id column="UUID" property="uuid" jdbcType="BIGINT" />
+    <result column="TOPIC_ID" property="topicId" jdbcType="BIGINT" />
+    <result column="REFER_UUID" property="referUuid" jdbcType="BIGINT" />
+    <result column="IN_TIME" property="inTime" jdbcType="TIMESTAMP" />
+    <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cn.bbs.model.BbsReply" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UUID, TOPIC_ID, REFER_UUID, IN_TIME, AUTHOR, IS_DELETE
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bbs_reply
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bbs_reply
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.bbs.model.BbsReply" >
+    insert into bbs_reply (UUID, TOPIC_ID, REFER_UUID, 
+      IN_TIME, AUTHOR, IS_DELETE, 
+      CONTENT)
+    values (#{uuid,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{referUuid,jdbcType=BIGINT}, 
+      #{inTime,jdbcType=TIMESTAMP}, #{author,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.bbs.model.BbsReply" >
+    insert into bbs_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="topicId != null" >
+        TOPIC_ID,
+      </if>
+      <if test="referUuid != null" >
+        REFER_UUID,
+      </if>
+      <if test="inTime != null" >
+        IN_TIME,
+      </if>
+      <if test="author != null" >
+        AUTHOR,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="topicId != null" >
+        #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="referUuid != null" >
+        #{referUuid,jdbcType=BIGINT},
+      </if>
+      <if test="inTime != null" >
+        #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.bbs.model.BbsReply" >
+    update bbs_reply
+    <set >
+      <if test="topicId != null" >
+        TOPIC_ID = #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="referUuid != null" >
+        REFER_UUID = #{referUuid,jdbcType=BIGINT},
+      </if>
+      <if test="inTime != null" >
+        IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null" >
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cn.bbs.model.BbsReply" >
+    update bbs_reply
+    set TOPIC_ID = #{topicId,jdbcType=BIGINT},
+      REFER_UUID = #{referUuid,jdbcType=BIGINT},
+      IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      IS_DELETE = #{isDelete,jdbcType=BIT},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.bbs.model.BbsReply" >
+    update bbs_reply
+    set TOPIC_ID = #{topicId,jdbcType=BIGINT},
+      REFER_UUID = #{referUuid,jdbcType=BIGINT},
+      IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      IS_DELETE = #{isDelete,jdbcType=BIT}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+    <select id="selectByPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bbs_reply r
+    where r.TOPIC_ID = #{topicId,jdbcType=BIGINT}
+    order by r.IN_TIME
+        <if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+</if>
+  </select>
+ <select id="selectByPageCount" resultType="java.lang.Integer">
+        select count(UUID)
+        from bbs_reply r
+        where r.TOPIC_ID = #{topicId,jdbcType=BIGINT}
+</select>
+
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.bbs.dao.BbsUserMapper">
+  <resultMap id="BaseResultMap" type="com.cn.bbs.model.BbsUser">
+    <id column="UUID" jdbcType="BIGINT" property="uuid" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="EMALL" jdbcType="VARCHAR" property="emall" />
+    <result column="GENDER" jdbcType="INTEGER" property="gender" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+   <association property="role" javaType="com.cn.bbs.model.BbsRole">
+			<id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+		</association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    UUID, USER_NAME, PASSWORD, NICK_NAME, EMALL, GENDER, TYPE
+  </sql>
+  <sql id="Role_Column_List">
+    UUID, USER_NAME, PASSWORD, NICK_NAME, EMALL, GENDER, NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_user
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </select>
+   <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_user
+    where USER_NAME = #{userName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bbs_user
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.bbs.model.BbsUser">
+    insert into bbs_user (UUID, USER_NAME, PASSWORD, 
+      NICK_NAME, EMALL, GENDER, 
+      TYPE)
+    values (#{uuid,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{emall,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.bbs.model.BbsUser">
+    insert into bbs_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        UUID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="nickName != null">
+        NICK_NAME,
+      </if>
+      <if test="emall != null">
+        EMALL,
+      </if>
+      <if test="gender != null">
+        GENDER,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="emall != null">
+        #{emall,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.bbs.model.BbsUser">
+    update bbs_user
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="emall != null">
+        EMALL = #{emall,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.bbs.model.BbsUser">
+    update bbs_user
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      EMALL = #{emall,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=INTEGER}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <select id="getAllByPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Role_Column_List" />
+    from bbs_user u,
+    bbs_role r
+    where r.ID = u.TYPE
+     order by u.UUID desc 
+    <if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+     </if>
+  </select>
+  <select id="getAllCountByPage" resultType="java.lang.Integer">
+    select 
+    count(UUID)
+    from bbs_user
+  </select>
+</mapper>

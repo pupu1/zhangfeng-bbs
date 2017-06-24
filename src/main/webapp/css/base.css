@@ -1,0 +1,25 @@
+.gray {
+    color: #999;
+}
+body  {
+	background:#999;
+} 
+.length {
+   	max-width: 980px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.divide {
+    border-top: 1px solid #E1E4E8;
+}
+.img1{
+	border-radius: 4px;
+	max-width: 48px;
+}
+.img2{
+	border-radius: 4px;
+	min-height: 50px;
+	min-width: 50px;
+    max-width: 64px;
+}
+}

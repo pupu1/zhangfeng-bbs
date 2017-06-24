@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.bbs.dao.BbsTopicMapper">
+  <resultMap id="BaseResultMap" type="com.cn.bbs.model.BbsTopic">
+    <id column="UUID" jdbcType="BIGINT" property="uuid" />
+    <result column="TAB" jdbcType="VARCHAR" property="tab" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="TAG" jdbcType="VARCHAR" property="tag" />
+    <result column="IN_TIME" jdbcType="TIMESTAMP" property="inTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="LAST_REPLY_TIME" jdbcType="TIMESTAMP" property="lastReplyTime" />
+    <result column="lLAST_REPLY_NAME" jdbcType="VARCHAR" property="llastReplyName" />
+    <result column="VIEW_COUNT" jdbcType="INTEGER" property="viewCount" />
+    <result column="AUTHOR" jdbcType="VARCHAR" property="author" />
+    <result column="IS_TOP" jdbcType="BIT" property="isTop" />
+    <result column="IS_GOOD" jdbcType="BIT" property="isGood" />
+    <result column="REPLY_COUNT" jdbcType="INTEGER" property="replyCount" />
+    <result column="IS_DELET" jdbcType="BIT" property="isDelet" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cn.bbs.model.BbsTopic">
+    <result column="CONTENT" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    UUID, TAB, TITLE, TAG, IN_TIME, MODIFY_TIME, LAST_REPLY_TIME, lLAST_REPLY_NAME, VIEW_COUNT, 
+    AUTHOR, IS_TOP, IS_GOOD, REPLY_COUNT, IS_DELET
+  </sql>
+  <sql id="Blob_Column_List">
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bbs_topic
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bbs_topic
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.bbs.model.BbsTopic">
+    insert into bbs_topic (UUID, TAB, TITLE, 
+      TAG, IN_TIME, MODIFY_TIME, 
+      LAST_REPLY_TIME, lLAST_REPLY_NAME, VIEW_COUNT, 
+      AUTHOR, IS_TOP, IS_GOOD, REPLY_COUNT, 
+      IS_DELET, CONTENT)
+    values (#{uuid,jdbcType=BIGINT}, #{tab,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{tag,jdbcType=VARCHAR}, #{inTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{lastReplyTime,jdbcType=TIMESTAMP}, #{llastReplyName,jdbcType=VARCHAR}, #{viewCount,jdbcType=INTEGER}, 
+      #{author,jdbcType=VARCHAR}, #{isTop,jdbcType=BIT}, #{isGood,jdbcType=BIT}, #{replyCount,jdbcType=INTEGER}, 
+      #{isDelet,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.bbs.model.BbsTopic">
+    insert into bbs_topic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        UUID,
+      </if>
+      <if test="tab != null">
+        TAB,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="tag != null">
+        TAG,
+      </if>
+      <if test="inTime != null">
+        IN_TIME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="lastReplyTime != null">
+        LAST_REPLY_TIME,
+      </if>
+      <if test="llastReplyName != null">
+        lLAST_REPLY_NAME,
+      </if>
+      <if test="viewCount != null">
+        VIEW_COUNT,
+      </if>
+      <if test="author != null">
+        AUTHOR,
+      </if>
+      <if test="isTop != null">
+        IS_TOP,
+      </if>
+      <if test="isGood != null">
+        IS_GOOD,
+      </if>
+      <if test="replyCount != null">
+        REPLY_COUNT,
+      </if>
+      <if test="isDelet != null">
+        IS_DELET,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="tab != null">
+        #{tab,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null">
+        #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastReplyTime != null">
+        #{lastReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="llastReplyName != null">
+        #{llastReplyName,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null">
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=BIT},
+      </if>
+      <if test="isGood != null">
+        #{isGood,jdbcType=BIT},
+      </if>
+      <if test="replyCount != null">
+        #{replyCount,jdbcType=INTEGER},
+      </if>
+      <if test="isDelet != null">
+        #{isDelet,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.bbs.model.BbsTopic">
+    update bbs_topic
+    <set>
+      <if test="tab != null">
+        TAB = #{tab,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        TAG = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null">
+        IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastReplyTime != null">
+        LAST_REPLY_TIME = #{lastReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="llastReplyName != null">
+        lLAST_REPLY_NAME = #{llastReplyName,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null">
+        VIEW_COUNT = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="author != null">
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null">
+        IS_TOP = #{isTop,jdbcType=BIT},
+      </if>
+      <if test="isGood != null">
+        IS_GOOD = #{isGood,jdbcType=BIT},
+      </if>
+      <if test="replyCount != null">
+        REPLY_COUNT = #{replyCount,jdbcType=INTEGER},
+      </if>
+      <if test="isDelet != null">
+        IS_DELET = #{isDelet,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cn.bbs.model.BbsTopic">
+    update bbs_topic
+    set TAB = #{tab,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      TAG = #{tag,jdbcType=VARCHAR},
+      IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      LAST_REPLY_TIME = #{lastReplyTime,jdbcType=TIMESTAMP},
+      lLAST_REPLY_NAME = #{llastReplyName,jdbcType=VARCHAR},
+      VIEW_COUNT = #{viewCount,jdbcType=INTEGER},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      IS_TOP = #{isTop,jdbcType=BIT},
+      IS_GOOD = #{isGood,jdbcType=BIT},
+      REPLY_COUNT = #{replyCount,jdbcType=INTEGER},
+      IS_DELET = #{isDelet,jdbcType=BIT},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.bbs.model.BbsTopic">
+    update bbs_topic
+    set TAB = #{tab,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      TAG = #{tag,jdbcType=VARCHAR},
+      IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      LAST_REPLY_TIME = #{lastReplyTime,jdbcType=TIMESTAMP},
+      lLAST_REPLY_NAME = #{llastReplyName,jdbcType=VARCHAR},
+      VIEW_COUNT = #{viewCount,jdbcType=INTEGER},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      IS_TOP = #{isTop,jdbcType=BIT},
+      IS_GOOD = #{isGood,jdbcType=BIT},
+      REPLY_COUNT = #{replyCount,jdbcType=INTEGER},
+      IS_DELET = #{isDelet,jdbcType=BIT}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  
+  <!--话题搜索-->
+  <select id="selectByTab" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_topic
+    where tab = #{tab,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_topic t
+     where IS_DELET =0
+    order by t.IS_TOP desc, t.LAST_REPLY_TIME desc,t.IN_TIME desc
+        <if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+	</if>
+	  </select>
+	 <select id="selectByPageCount" resultType="java.lang.Integer">
+	        select count(UUID)
+	        from bbs_topic
+	        where IS_DELET =0
+	</select>
+  <select id="selectByTabAndPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_topic t
+     where IS_DELET =0 and TAB = #{tab,jdbcType=VARCHAR}
+    order by t.IS_TOP desc, t.LAST_REPLY_TIME desc,t.IN_TIME desc
+        <if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+	</if>
+	  </select>
+	 <select id="selectByTabAndPageCount" resultType="java.lang.Integer">
+	        select count(UUID)
+	        from bbs_topic
+	        where IS_DELET =0 and TAB = #{tab,jdbcType=VARCHAR}
+	</select>
+	<update id="deleteById">
+	    update bbs_topic
+	    set IS_DELET = 1
+	    where UUID = #{uuid,jdbcType=BIGINT}
+	</update>
+	<update id="updateIsGood">
+	    update bbs_topic
+	    set IS_GOOD = #{isGood,jdbcType=BIT}
+	    where UUID = #{uuid,jdbcType=BIGINT}
+	</update>
+	<update id="updateIsTop">
+	    update bbs_topic
+	    set IS_TOP = #{isTop,jdbcType=BIT}
+	    where UUID = #{uuid,jdbcType=BIGINT}
+	</update>
+</mapper>

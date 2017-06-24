@@ -1,0 +1,11 @@
+		var userName = $("#userName1");
+	 $.ajax({  
+	            data: "userName=userName",  
+	            url: "./userNameCheck",  
+	            success: function(data) { 
+	            alert(data); 
+	                 if(data==false){
+	                 $("#alert").removeClass("hide");
+            	$("#error_massage").html("用户名重复");
+	            }  
+	        });  

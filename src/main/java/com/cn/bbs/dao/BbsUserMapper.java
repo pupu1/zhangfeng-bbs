@@ -1,7 +1,10 @@
 package com.cn.bbs.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import com.cn.bbs.model.BbsPermission;
 import com.cn.bbs.model.BbsUser;
 
 public interface BbsUserMapper {

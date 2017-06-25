@@ -23,7 +23,9 @@ public class CollectController {
 
 	@Autowired
 	private CollectService collectService;
-	
+	/**
+	 * 添加收藏
+	 */
 	@RequestMapping(value = "/add/{topicUuid}/{pageNum}")
 	public String add(HttpServletRequest request,
 							@PathVariable("topicUuid") Long topicUuid,
@@ -45,7 +47,10 @@ public class CollectController {
 		collectService.insert(collect);
 		return "redirect:/reply/"+topicUuid+"/"+pageNum;
 	}
-
+	
+	/**
+	 * 删除收藏
+	 */
 	@RequestMapping(value = "/delete/{topicUuid}/{pageNum}")
 	public String delete(HttpServletRequest request,
 							@PathVariable("topicUuid") Long topicUuid,

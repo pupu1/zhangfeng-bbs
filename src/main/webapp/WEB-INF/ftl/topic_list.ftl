@@ -6,7 +6,7 @@
         </div>
         <div class="media-body">
             <div class="title">
-                <a href="${ctx}/reply/${topic.uuid}/1">${topic.title}</a>
+                <a href="${ctx}/topic/intoTopic/${topic.uuid}">${topic.title}</a>
             </div>
             <p class="gray" >
             	<#if topic.isTop>

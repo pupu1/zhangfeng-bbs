@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cn.bbs.dao.BbsPermissionMapper;
 import com.cn.bbs.dao.BbsRoleMapper;
 import com.cn.bbs.dao.BbsUserMapper;
 import com.cn.bbs.dto.pageData;
+import com.cn.bbs.model.BbsPermission;
 import com.cn.bbs.model.BbsRole;
 import com.cn.bbs.model.BbsUser;
 import com.cn.bbs.service.PermissionService;
@@ -17,6 +19,8 @@ public class  PermissionServiceImpl implements  PermissionService {
 	private BbsUserMapper bbsUserMapper;
 	@Autowired
 	private BbsRoleMapper bbsRoleMapper;
+	@Autowired
+	private BbsPermissionMapper bbsPermissionMapper;
 
 	public pageData<BbsUser> selectUserByPage(Integer pageSize, Integer pageNum) {
 		List<BbsUser> List= bbsUserMapper.getAllByPage((pageNum-1)*pageSize,pageSize);
@@ -34,6 +38,11 @@ public class  PermissionServiceImpl implements  PermissionService {
 
 	public void updateUser(BbsUser perUser) {
 		bbsUserMapper.updateByPrimaryKeySelective(perUser);
+	}
+
+	@Override
+	public List<BbsPermission> getSecondPermissions() {
+		return bbsPermissionMapper.getSecondPermissions();
 	}
 }
  

@@ -8,8 +8,18 @@ public class BbsPermission {
     private String url;
 
     private Long pid;
+    
+    private BbsPermission parentBbsPermission;
 
-    public Long getId() {
+    public BbsPermission getParentBbsPermission() {
+		return parentBbsPermission;
+	}
+
+	public void setParentBbsPermission(BbsPermission parentBbsPermission) {
+		this.parentBbsPermission = parentBbsPermission;
+	}
+
+	public Long getId() {
         return id;
     }
 

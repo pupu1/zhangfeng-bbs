@@ -13,7 +13,7 @@
             </button><small id="error_massage1" class="center-block"></small></div>
 <div class="modal-body">
 
-<form class="form-horizontal" role="form" action="${ctx}/register" method="post" id="registerForm">
+<form class="form-horizontal" role="form" action="${ctx}/user/register" method="post" id="registerForm">
 
   <div class="form-group">
     <label for="username" class="col-sm-2 control-label">用户名</label>

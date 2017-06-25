@@ -16,8 +16,11 @@
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd ">
 	
+	<!-- 数据文件 --> 
+    <context:property-placeholder location="classpath:database.properties"/>
 	 <!-- 注解注入 --> 
 	<context:component-scan base-package="com.cn.bbs.controller"/>
+ 
 	<!-- 配置freeMarker视图解析器 -->
 	<bean id="freemarkerViewResolver"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
@@ -33,9 +36,7 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="1024000"></property>
 	</bean>
-	    <!-- 全局异常处理器   
-        只要你实现了HandlerExceptionResolver接口，这个  
-        类就是一个全局异常处理器-->  
+	    <!-- 全局异常处理器   -->  
         <bean class="com.cn.bbs.exception.BbsExceptionResolver"></bean>  
 	<!-- 拦截器 -->
 	<mvc:interceptors>  

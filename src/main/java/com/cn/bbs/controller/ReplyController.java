@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,9 @@ import com.cn.bbs.service.TopicService;
 @Controller
 @RequestMapping("/reply")
 public class ReplyController {
+	
+	@Value("${pageSize}") 
+	private String pageSize; 
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
@@ -30,8 +34,9 @@ public class ReplyController {
 	@Autowired
 	private CollectService collectService;
 	
-	private Integer pageSize=2;
-	
+	/**
+	 * 回复
+	 */
 	@RequestMapping(value = "/create")
 	public String replyCreate(HttpServletRequest request,@RequestParam("topicUuid")Long topicId,
 						@RequestParam("content")String content) {
@@ -52,19 +57,25 @@ public class ReplyController {
 		return "redirect:/reply/"+topicId+"/1";
 	}
 	
-	@RequestMapping(value = "/{topicUuid}/{pageNum}")
+	/**
+	 * 回复翻页
+	 */
+	@RequestMapping(value = "/replyPage/{topicUuid}/{pageNum}")
 	public String topicReply(HttpServletRequest request,@PathVariable("topicUuid")Long topicUuid,@PathVariable("pageNum")Integer pageNum) {
 		BbsTopic topic = topicService.selectByUuid(topicUuid); 
 		request.setAttribute("topic", topic);
-		pageData<BbsReply> page = replyService.selectByPage(pageSize,pageNum,topicUuid);
+		Integer IpageSize = Integer.valueOf(pageSize.trim());
+		pageData<BbsReply> page = replyService.selectByPage(IpageSize,pageNum,topicUuid);
 		request.setAttribute("page", page);
 		BbsUser user = (BbsUser) request.getSession().getAttribute("user");
-		Long userUuid = user.getUuid();
-		Integer collectCount=collectService.selectByTopicUuidCount(topicUuid);
-		request.setAttribute("collectCount", collectCount);
-		BbsCollect collect=collectService.selectByTopicUuidAndUserUuid(topicUuid,userUuid);
-		if (user!=null&&collect!=null) {
-			request.setAttribute("collect", collect);
+		if (null!=user) {
+			Long userUuid = user.getUuid();
+			Integer collectCount=collectService.selectByTopicUuidCount(topicUuid);
+			request.setAttribute("collectCount", collectCount);
+			BbsCollect collect=collectService.selectByTopicUuidAndUserUuid(topicUuid,userUuid);
+			if (null!=collect) {
+				request.setAttribute("collect", collect);
+			}
 		}
 		return "topic_reply";
 	}

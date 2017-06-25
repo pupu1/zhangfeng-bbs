@@ -55,7 +55,7 @@
          	<#include "./reply_list.ftl"/>
 			<@reply_list />
 			<#include "./page.ftl"/>
-			<@pages  pageNum=page.pageNum totalPage=page.totalPage pagePath="/reply/${topic.uuid}/"/>       
+			<@pages  pageNum=page.pageNum totalPage=page.totalPage pagePath="/reply/replyPage/${topic.uuid}/"/>       
 		</div>
 	</#if>
 </div>

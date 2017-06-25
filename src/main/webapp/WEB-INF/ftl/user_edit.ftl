@@ -8,7 +8,7 @@
 	</ul>
 </div>
 <div class="panel-body">
-	<form class="form-horizontal" role="form" action="${ctx}/permission/userEdited" method="post" id="userEditForm">
+	<form class="form-horizontal" role="form" action="${ctx}/permission/user/userEdited" method="post" id="userEditForm">
 		<div class="form-group">
 			<label for="userName" >用户名</label>
 		    	<div>

@@ -79,4 +79,17 @@
       PID = #{pid,jdbcType=BIGINT}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getSecondPermissions" resultMap="BaseResultMap" >
+    select
+	c.ID,
+	c.NAME,
+	c.URL,
+	c.PID
+	from
+	bbs_permission c ,
+	bbs_permission p
+	where
+	p.ID =  c.PID AND
+	p.PID =  '1'
+  </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.cn.bbs.service;
 import java.util.List;
 
 import com.cn.bbs.dto.pageData;
+import com.cn.bbs.model.BbsPermission;
 import com.cn.bbs.model.BbsRole;
 import com.cn.bbs.model.BbsUser;
 
@@ -15,5 +16,7 @@ public interface  PermissionService {
 	public List<BbsRole> getAllRole();
 
 	public void updateUser(BbsUser perUser);
+
+	public List<BbsPermission> getSecondPermissions();
 
 }

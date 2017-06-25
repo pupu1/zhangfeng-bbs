@@ -1,5 +1,7 @@
 package com.cn.bbs.dao;
 
+import java.util.List;
+
 import com.cn.bbs.model.BbsPermission;
 
 public interface BbsPermissionMapper {
@@ -14,4 +16,6 @@ public interface BbsPermissionMapper {
     int updateByPrimaryKeySelective(BbsPermission record);
 
     int updateByPrimaryKey(BbsPermission record);
+    
+	List<BbsPermission> getSecondPermissions();
 }

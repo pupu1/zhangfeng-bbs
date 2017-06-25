@@ -12,7 +12,7 @@
                 &times;
             </button><small id="error_massage" class="center-block"></small></div>
 <div class="modal-body">
-<form class="form-horizontal" role="form" action="${ctx}/login" method="post" id="form">
+<form class="form-horizontal" role="form" action="${ctx}/user/login" method="post" id="form">
   <div class="form-group">
     <label for="username" class="col-sm-2 control-label">名字</label>
     <div class="col-sm-10">
